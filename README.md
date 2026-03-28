@@ -55,3 +55,8 @@ Lihat `.env.example`.
 - `app/api/cashify/webhook/route.ts` → webhook payment
 - `app/api/web-push/*` → subscription + broadcast
 - `supabase-schema.sql` → schema + RLS + seed product
+
+
+## Maintenance lock
+
+Website ini saat ini dikunci ke mode maintenance penuh. Semua route selain `/` akan diarahkan ke halaman maintenance, dan seluruh endpoint `/api/*` diblokir oleh middleware. Setelah 7 hari melewati tanggal maintenance selesai (30 Maret 2026 10.00 WIB), sistem mengembalikan status nonaktif otomatis.
