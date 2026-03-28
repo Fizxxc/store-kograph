@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { checkCashifyStatus } from "@/lib/cashify";
+import { checkCashifyStatus, isCashifyPaid } from "@/lib/cashify";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export async function POST(request: Request) {
   try {
     const supabase = await createServerSupabase();
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { transactionId, orderId } = await request.json();
@@ -14,11 +16,13 @@ export async function POST(request: Request) {
 
     const patch: Record<string, unknown> = {
       payment_status: statusPayload.status,
+      cashify_total_amount: statusPayload.totalAmount || statusPayload.amount || null,
+      expires_at: statusPayload.expiredAt || null,
       meta: statusPayload,
       updated_at: new Date().toISOString(),
     };
 
-    if (statusPayload.status === "paid") {
+    if (isCashifyPaid(statusPayload.status)) {
       patch.order_status = "done";
     }
 

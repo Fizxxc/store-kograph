@@ -23,31 +23,31 @@ export function DashboardClient({ profile, products, orders, broadcasts }: { pro
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[280px,1fr]">
+    <div className="grid gap-6 xl:grid-cols-[260px,1fr]">
       <aside className="surface hidden h-fit p-5 xl:block">
-        <div className="rounded-3xl border border-white/10 bg-brand-500/10 p-5">
-          <div className="text-xs uppercase tracking-[0.25em] text-brand-200">Akun aktif</div>
+        <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
+          <div className="text-[11px] uppercase tracking-[0.3em] text-white/45">Akun</div>
           <h2 className="mt-2 text-xl font-semibold text-white">{profile.full_name || profile.email}</h2>
-          <p className="mt-1 text-sm text-slate-300">Role: {profile.role}</p>
+          <p className="mt-2 text-sm text-white/55">{profile.role}</p>
         </div>
-        <div className="mt-5 space-y-3 text-sm text-slate-300">
-          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-brand-400" href="/dashboard">Overview</a>
-          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-brand-400" href="/dashboard?tab=pay">Payment</a>
-          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-brand-400" href="/dashboard?tab=orders">Orders</a>
-          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-brand-400" href="/dashboard?tab=broadcasts">Broadcast</a>
+        <div className="mt-5 space-y-2 text-sm text-white/70">
+          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-white" href="/dashboard">Ringkasan</a>
+          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-white" href="/dashboard?tab=pay">Pembayaran</a>
+          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-white" href="/dashboard?tab=orders">Pesanan</a>
+          <a className="block rounded-2xl border border-white/10 px-4 py-3 hover:border-white" href="/dashboard?tab=broadcasts">Info</a>
         </div>
-        <button onClick={handleLogout} className="mt-6 w-full rounded-2xl border border-red-400/20 px-4 py-3 text-sm text-red-200 hover:bg-red-500/10">Logout</button>
+        <button onClick={handleLogout} className="mt-6 w-full rounded-2xl border border-white/10 px-4 py-3 text-sm text-white hover:border-white">Keluar</button>
       </aside>
 
       <section className="space-y-6 pb-28 md:pb-8">
         <div className="surface p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.25em] text-brand-200">Dashboard user</p>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-white/45">Dashboard</p>
               <h1 className="mt-2 text-3xl font-semibold text-white">Halo, {profile.full_name || profile.email}</h1>
-              <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-400">Dashboard user difokuskan untuk melihat pricelist, menerima broadcast admin, dan checkout QRIS secara realtime.</p>
+              <p className="mt-2 max-w-2xl text-sm leading-7 text-white/55">Kelola pembayaran dan pantau status transaksi dari satu tempat.</p>
             </div>
-            <button onClick={handleLogout} className="rounded-2xl border border-white/10 px-4 py-3 text-sm text-white hover:border-brand-400 xl:hidden">Logout</button>
+            <button onClick={handleLogout} className="rounded-2xl border border-white/10 px-4 py-3 text-sm text-white hover:border-white xl:hidden">Keluar</button>
           </div>
         </div>
 
@@ -55,11 +55,11 @@ export function DashboardClient({ profile, products, orders, broadcasts }: { pro
           <div className="grid gap-6 lg:grid-cols-2">
             <SubscribePush />
             <div className="surface p-6">
-              <p className="text-xs uppercase tracking-[0.25em] text-brand-200">Ringkasan</p>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-white/45">Ringkasan</p>
               <div className="mt-5 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4"><div className="text-sm text-slate-400">Produk aktif</div><div className="mt-2 text-3xl font-semibold text-white">{products.length}</div></div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4"><div className="text-sm text-slate-400">Order saya</div><div className="mt-2 text-3xl font-semibold text-white">{orders.length}</div></div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4"><div className="text-sm text-slate-400">Broadcast</div><div className="mt-2 text-3xl font-semibold text-white">{broadcasts.length}</div></div>
+                <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4"><div className="text-sm text-white/55">Produk</div><div className="mt-2 text-3xl font-semibold text-white">{products.length}</div></div>
+                <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4"><div className="text-sm text-white/55">Transaksi</div><div className="mt-2 text-3xl font-semibold text-white">{orders.length}</div></div>
+                <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4"><div className="text-sm text-white/55">Info</div><div className="mt-2 text-3xl font-semibold text-white">{broadcasts.length}</div></div>
               </div>
             </div>
             <div className="lg:col-span-2">

@@ -6,7 +6,9 @@ import { buildOrderCode, whatsappLink } from "@/lib/utils";
 export async function POST(request: Request) {
   try {
     const supabase = await createServerSupabase();
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await request.json();
@@ -17,14 +19,16 @@ export async function POST(request: Request) {
     if (!product) return NextResponse.json({ error: "Produk tidak ditemukan" }, { status: 404 });
 
     const cashify = await createCashifyPayment(product.display_price);
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
     const orderCode = buildOrderCode();
+    const totalAmount = Number(cashify.totalAmount || product.display_price);
     const whatsappText = [
       "Halo admin KOGRAPH STUDIO.ID,",
-      `Payment berhasil untuk order ${orderCode}.`,
+      `Saya sudah menyelesaikan pembayaran untuk order ${orderCode}.`,
       `Produk: ${product.name}`,
       `Kategori: ${product.category}`,
       `Metode: QRIS`,
-      `Total: Rp${cashify.totalAmount}`,
+      `Total: Rp${totalAmount}`,
     ].join("\n");
 
     const insertPayload = {
@@ -39,9 +43,9 @@ export async function POST(request: Request) {
       order_status: "waiting_payment",
       qr_string: cashify.qr_string,
       cashify_transaction_id: cashify.transactionId,
-      cashify_total_amount: cashify.totalAmount,
+      cashify_total_amount: totalAmount,
       unique_nominal: cashify.uniqueNominal,
-      expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+      expires_at: cashify.expiredAt || expiresAt,
       whatsapp_url: whatsappLink(process.env.WHATSAPP_ADMIN || "6288991114939", whatsappText),
       meta: cashify,
     };

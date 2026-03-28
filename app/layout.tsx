@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "KOGRAPH STUDIO.ID",
-  description: "Web payment QRIS realtime dengan Cashify by Kograph Studio.",
+  title: "Maintenance | KOGRAPH STUDIO.ID",
+  description: "Website sedang dalam proses maintenance dan akan kembali online sesuai jadwal.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
